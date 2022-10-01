@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Train: Data/APIs 1</title>
+</head>
+<body>
+    <img src="" id="ballom" width="480"/>
+    <script>
+        //this is cool
+        console.log("About to fetch a ballom");
+
+        catchBallom().catch(error => {
+            console.log("Error!")
+            console.error(error);
+        });
+
+        async function catchBallom(){
+            const response = await fetch('ballom.jpg');
+            const blob = await response.blob();
+            document.getElementById('ballom').src = URL.createObjectURL(blob);
+        }
+
+
+        const images = ['skeleton.jpg', 'abstract.jpg', 'saber.jpg'];
+
+        catchImages(images)
+            .catch(error => {
+                console.log(error);
+            });
+        
+        async function catchImages(images){
+
+            for (let image of images){
+
+                const response = await fetch(image);
+                const blob = await response.blob();
+                const img = document.createElement('img');
+
+                img.src = URL.createObjectURL(blob);
+                img.width = '200';
+
+                document.body.append(img);
+
+            }
+
+        }
+
+        const poema = "text.txt";
+
+        catchText(poema);
+
+        async function catchText(poema){
+            const response = await fetch(poema);
+            const poem = await response.text();
+            const text = document.createElement('p');
+
+            text.id = "poema";
+            document.body.append(text);
+
+            return document.getElementById('poema').innerText = poem;
+        }
+
+        
+    </script>
+</body>
+</html>
