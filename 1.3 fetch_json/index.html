@@ -12,6 +12,10 @@
     <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
         integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mappa-mundi@0.0.4"></script>
+    <script src="sketch.js"></script>
     <style>
         #issMap {
             height: 500px;
@@ -30,48 +34,7 @@
         longitude: <span id="lon"></span>°
     </p>
 
-    <div id="issMap"></div>
 
-    <script>
-        var map = L.map('issMap').setView([0, 0], 1);
-        
-
-        var myIcon = L.icon({
-            iconUrl: 'ISS200.png',
-            iconSize: [50, 32],
-            iconAnchor: [25, 16],
-        });
-
-        const marker = L.marker([0, 0], {icon: myIcon});
-
-        const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        const tileURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-        const tiles = L.tileLayer(tileURL, { attribution });
-        tiles.addTo(map);
-
-        const api_url = 'https://api.wheretheiss.at/v1/satellites/25544'
-
-        getISS().then((data) => {map.setView([data.latitude, data.longitude], 10)});
-
-        setInterval(async () => { await getISS()
-            .then(marker.addTo(map)) }, 1000);
-
-        async function getISS() {
-            const response = await fetch(api_url);
-            const data = await response.json();
-            const { longitude, latitude } = data;
-
-            marker.setLatLng([latitude, longitude]);
-            
-
-            document.getElementById("lat").textContent = latitude;
-            document.getElementById("lon").textContent = longitude;
-
-        }
-
-
-
-    </script>
 </body>
 
 </html>

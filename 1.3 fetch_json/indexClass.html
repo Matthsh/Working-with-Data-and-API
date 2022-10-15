@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+        integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+        integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+    <style>
+        #issMap {
+            height: 500px;
+        }
+    </style>
+
+    <title>Fetch JSON from API and map lat lon</title>
+</head>
+
+<body>
+
+    <h1>Where is the ISS</h1>
+
+    <p>
+        latitude: <span id="lat"></span>°<br />
+        longitude: <span id="lon"></span>°
+    </p>
+
+    <div id="issMap"></div>
+
+    <script>
+        var map = L.map('issMap');
+
+
+var myIcon = L.icon({
+    iconUrl: 'ISS200.png',
+    iconSize: [50, 32],
+    iconAnchor: [25, 16],
+});
+
+const marker = L.marker([0, 0], { icon: myIcon });
+
+const attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+const tileURL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+const tiles = L.tileLayer(tileURL, { attribution });
+tiles.addTo(map);
+
+const api_url = 'https://api.wheretheiss.at/v1/satellites/25544'
+
+getISS().then((data) => { map.setView([data.latitude, data.longitude], 10) });
+
+setInterval(async () => {
+    await getISS()
+        .then(marker.addTo(map))
+}, 1000);
+
+let firstTime = true;
+
+async function getISS() {
+    const response = await fetch(api_url);
+    const data = await response.json();
+    const { longitude, latitude } = data;
+
+    marker.setLatLng([latitude, longitude]);
+
+    if (firstTime) {
+        map.setView([latitude, longitude], 3);
+        firstTime = false;
+    }
+
+
+    document.getElementById("lat").textContent = latitude;
+    document.getElementById("lon").textContent = longitude;
+
+}
+
+
+
+
+    </script>
+</body>
+
+</html>
