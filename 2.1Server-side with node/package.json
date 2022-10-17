@@ -1,0 +1,16 @@
+{
+  "name": "module2",
+  "version": "1.0.0",
+  "description": "This is a data selfie app by Joey Lee",
+  "main": "index.js",
+  "author": "Mattheus Medina",
+  "license": "MIT",
+  "keywords": [
+    "example",
+    "data",
+    "selfie"
+  ],
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
