@@ -9,9 +9,19 @@ app.use(express.json({ limit: '1mb' }));
 const database = new Datastore('database.db');
 database.loadDatabase();
 
-app.post('/api',
+// Using function find
+app.get('/api', (request, response) => {
+    database.find({}, (err, data) => {
+        if(err){
+            response.end();
+            return;
+        }
+        response.json(data)
+    })
+    
+})
 
-    (request, response) => {
+app.post('/api', (request, response) => {
         console.log('got the request')
 
         const data = request.body;
@@ -23,8 +33,9 @@ app.post('/api',
         response.json({
             timestamp: timestamp,
             status: 'success',
+            nome: data.nome,
             latitude: data.lat,
             longitude: data.lon
         })
-
-    });
+    }
+);

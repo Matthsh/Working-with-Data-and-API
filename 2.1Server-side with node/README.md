@@ -19,4 +19,6 @@ then <br/>
 install database <a href="https://github.com/louischatriot/nedb">nedb documentation</a>
 then <br/>
 implement database at index.js<br/>
+then <br/>
+use function "find" to show the data from the database<br/>
 </p>
