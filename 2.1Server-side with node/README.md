@@ -20,5 +20,9 @@ install database <a href="https://github.com/louischatriot/nedb">nedb documentat
 then <br/>
 implement database at index.js<br/>
 then <br/>
-use function "find" to show the data from the database<br/>
+use function "find" to get the data from the database<br/>
+then <br/>
+import p5.js to the project via CDN<br/>
+then <br/>
+implement the video capture and parse it to the database<br/>
 </p>

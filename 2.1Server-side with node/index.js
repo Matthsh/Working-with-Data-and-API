@@ -18,7 +18,6 @@ app.get('/api', (request, response) => {
         }
         response.json(data)
     })
-    
 })
 
 app.post('/api', (request, response) => {
@@ -29,13 +28,6 @@ app.post('/api', (request, response) => {
         data.timestamp = timestamp;
 
         database.insert(data);
-
-        response.json({
-            timestamp: timestamp,
-            status: 'success',
-            nome: data.nome,
-            latitude: data.lat,
-            longitude: data.lon
-        })
+        response.json(data)
     }
 );
