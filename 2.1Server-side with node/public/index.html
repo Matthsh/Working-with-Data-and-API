@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width" initial-scale="1.0">
   <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
-
+  <link rel="stylesheet" href="style.css">
   <title>Document</title>
 
 </head>
@@ -14,56 +14,13 @@
 <body>
   <h1>Data selfie APP</h1>
   <header>
-    <h3><a href="./index.html">main</a>|<a href="./all.html">database</a></h3>
+    <h3><a href="../index.html">main</a>|<a href="./logs">database</a></h3>
   </header>
   <p>latitude: <span id="latitude"></span>&deg;<br />longitude: <span id="longitude"></span>&deg;</p>
+  <label for="nome">Enter a name for the location</label><br>
   <input id="nome" value="casa">
   <button id="submit">getData</button>
-
-  <script>
-
-
-    function setup() {
-      noCanvas();
-      const video = createCapture(VIDEO)
-      video.size(320, 240);
-
-      /* Using geolocator to fetch your location */
-      let lat, lon;
-      
-      const button = document.getElementById("submit");
-      button.addEventListener("click", async (event) => {
-        const nome = document.getElementById("nome").value;
-        video.loadPixels();
-        const image64 = video.canvas.toDataURL();
-
-        const data = { lat, lon, nome, image64 };
-
-        const options = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        };
-        const response = await fetch('/api', options)
-        const res_to_json = await response.json();
-        console.log(res_to_json)
-
-      });
-      
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          lat = position.coords.latitude;
-          lon = position.coords.longitude;
-          document.getElementById("latitude").innerText = lat;
-          document.getElementById("longitude").innerText = lon;
-        });
-      } else {
-        console.log("geolocation not available")
-      };
-    }
-  </script>
+  <script src="sketch.js"></script>
 </body>
 
 </html>
